@@ -8,6 +8,8 @@ import 'package:shelf_router/shelf_router.dart';
 class ContactsRestApi {
   DbCollection store;
 
+  final _CONTENT_TYPE_JSON = {'Content-Type': ContentType.json.mimeType};
+
   ContactsRestApi(this.store);
 
   Handler get router {
@@ -16,7 +18,20 @@ class ContactsRestApi {
       final contacts = await store.find().toList();
       return Response.ok(
         json.encode({'contacts': contacts}),
-        headers: {'Content-Type': ContentType.json.mimeType},
+        headers: _CONTENT_TYPE_JSON,
+      );
+    });
+    router.post('/', (Request request) async {
+      final payload = await request.readAsString();
+      final data = json.decode(payload);
+
+      await store.insert(data);
+
+      final addedEntry = await store.findOne(where.eq('name', data['name']));
+      return Response(
+        HttpStatus.created,
+        body: json.encode(addedEntry),
+        headers: _CONTENT_TYPE_JSON,
       );
     });
     return router;

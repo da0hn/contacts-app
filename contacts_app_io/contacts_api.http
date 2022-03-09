@@ -1,4 +1,10 @@
-
 GET http://localhost:8081/contacts/
 
+####
 
+POST http://localhost:8081/contacts/
+Content-Type: application/json
+
+{
+  "name":"Another name"
+}
