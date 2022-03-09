@@ -21,6 +21,7 @@ class Event {
 
 class ContactsSocketApi {
   DbCollection store;
+  final List<WebSocketChannel> _sockets = [];
 
   ContactsSocketApi(this.store);
 
@@ -40,8 +41,11 @@ class ContactsSocketApi {
         }
 
         final contacts = await store.find().toList();
-        socket.sink.add(json.encode(contacts));
+        for (final ws in _sockets) {
+          ws.sink.add(json.encode(contacts));
+        }
       });
+      _sockets.add(socket);
     });
   }
 }
