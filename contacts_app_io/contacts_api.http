@@ -6,5 +6,9 @@ POST http://localhost:8081/contacts/
 Content-Type: application/json
 
 {
-  "name":"Another name"
+  "name":"Another name to delete"
 }
+
+###
+
+DELETE http://localhost:8081/contacts/622924df8b92f9562aeea998

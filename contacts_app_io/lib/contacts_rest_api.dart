@@ -34,6 +34,13 @@ class ContactsRestApi {
         headers: _CONTENT_TYPE_JSON,
       );
     });
+    router.delete('/<id|.+>', (Request request, String id) async {
+      await store.deleteOne(where.eq(
+        '_id',
+        ObjectId.fromHexString(id),
+      ));
+      return Response.ok(null);
+    });
     return router;
   }
 }
