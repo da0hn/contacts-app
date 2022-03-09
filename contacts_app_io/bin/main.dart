@@ -17,8 +17,12 @@ main() async {
   final router = Router();
 
   router.mount(
-    '/contacts/',
+    '/contacts',
     ContactsRestApi(contactsCollection).router,
+  );
+  router.mount(
+    '/contacts-ws',
+    ContactsSocketApi(contactsCollection).router,
   );
 
   final handler = Pipeline().addMiddleware(logRequests()).addHandler(router);
