@@ -1,4 +1,4 @@
-import 'dart:_http';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -26,6 +26,7 @@ class Contact extends Equatable {
     List<String> text,
     int index,
   ) {
+    if (text.length < index + 1) return '';
     return text[index].substring(0, 1).toUpperCase();
   }
 
@@ -33,10 +34,15 @@ class Contact extends Equatable {
     final String name = map['name'];
     final splitName = name.split(' ');
     return Contact._(
-      id: map['id'] as String,
+      id: map['_id'] as String,
       name: name,
       initials: _initial(splitName, 0) + _initial(splitName, 1),
     );
+  }
+
+  @override
+  String toString() {
+    return 'Contact{id: $id, name: $name, initials: $initials}';
   }
 
   @override
