@@ -25,7 +25,10 @@ main() async {
     ContactsSocketApi(contactsCollection).router,
   );
 
-  final handler = Pipeline().addMiddleware(logRequests()).addHandler(router);
+  final handler = Pipeline()
+      .addMiddleware(logRequests())
+      .addMiddleware(handleCors())
+      .addHandler(router);
 
   withHotreload(() => serve(handler, InternetAddress.anyIPv4, port));
 }
