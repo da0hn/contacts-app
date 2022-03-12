@@ -66,7 +66,7 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
   void _fetchContacts() async {
     final contacts = await widget.api.fetch();
     setState(() {
-      _contacts = _contacts;
+      _contacts = contacts;
       _isLoading = false;
     });
   }
