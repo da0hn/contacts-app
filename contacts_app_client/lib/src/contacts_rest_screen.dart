@@ -30,9 +30,12 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
         centerTitle: true,
         title: const Text('Contacts App'),
       ),
-      body: Container(
-        color: Colors.black38,
-      ),
+      body: _isLoading
+          ? _loading()
+          : ContactList(
+              data: _contacts,
+              onDelete: (String id) => _deleteContact(id),
+            ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -44,11 +47,16 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
     );
   }
 
+  void _deleteContact(String id) async {
+    await widget.api.delete(id);
+    setState(() {
+      _contacts.removeWhere((element) => element.id == id);
+    });
+  }
+
   FloatingActionButton _buildRefreshButton() {
     return FloatingActionButton(
-      onPressed: () {
-        _fetchContacts();
-      },
+      onPressed: () => _fetchContacts(),
       tooltip: 'Refresh list',
       backgroundColor: Colors.purple,
       child: const Icon(Icons.refresh),
@@ -69,5 +77,13 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
       _contacts = contacts;
       _isLoading = false;
     });
+  }
+
+  _loading() {
+    return Center(
+      child: CircularProgressIndicator(
+        color: Colors.red,
+      ),
+    );
   }
 }
