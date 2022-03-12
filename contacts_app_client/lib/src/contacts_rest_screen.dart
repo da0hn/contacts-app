@@ -1,4 +1,5 @@
 import 'package:contacts_app_client/contacts_api_client.dart';
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
 class ContactRestScreen extends StatefulWidget {
@@ -34,6 +35,7 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
           ? _loading()
           : ContactList(
               data: _contacts,
+              onAdd: () => _addContact(),
               onDelete: (String id) => _deleteContact(id),
             ),
       floatingActionButton: Row(
@@ -65,7 +67,7 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
 
   FloatingActionButton _buildAddContactButton() {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () => this._addContact(),
       tooltip: 'Add new contact',
       child: const Icon(Icons.person_add),
     );
@@ -85,5 +87,15 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
         color: Colors.red,
       ),
     );
+  }
+
+  _addContact() async {
+    final faker = Faker();
+    final person = faker.person;
+    final fullName = '${person.firstName()} ${person.lastName()}';
+    final newContact = await widget.api.add(fullName);
+    setState(() {
+      _contacts.add(newContact);
+    });
   }
 }
