@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Contact extends Equatable {
   final String id;
@@ -71,4 +74,26 @@ class ContactRestApi {
   }
 
   Future delete(String id) => _api.delete('/contacts/$id');
+}
+
+typedef Contacts = List<Contact>?;
+
+class ContactSocketApi {
+  ContactSocketApi()
+      : _api = WebSocketChannel.connect(
+          Uri.parse('ws://localhost:8081/contacts-ws'),
+        );
+
+  final WebSocketChannel _api;
+
+  Stream<Contacts> get stream => _api.stream.map(
+        (data) {
+          final decoded = json.decode(data);
+          return (decoded as List)
+              .map((json) => Contact.fromMap(json))
+              .toList();
+        },
+      );
+
+  ValueChanged<String> get send => _api.sink.add;
 }
