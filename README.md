@@ -1,6 +1,6 @@
 # Contacts Application
 
-Application Web/Desktop/Mobile developed in Flutter with Backend in Dart and containernezired MongoDb as Database.
+Application Web/Desktop/Mobile developed in Flutter with Backend in Dart and MongoDb as Database.
 
 ## Run Application
 
