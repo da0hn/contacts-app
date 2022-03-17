@@ -60,6 +60,7 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
     return FloatingActionButton(
       onPressed: () => _fetchContacts(),
       tooltip: 'Refresh list',
+      heroTag: 'refreshButton',
       backgroundColor: Colors.purple,
       child: const Icon(Icons.refresh),
     );
@@ -67,8 +68,9 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
 
   FloatingActionButton _buildAddContactButton() {
     return FloatingActionButton(
-      onPressed: () => this._addContact(),
+      onPressed: () => _addContact(),
       tooltip: 'Add new contact',
+      heroTag: 'addContact',
       child: const Icon(Icons.person_add),
     );
   }
@@ -82,7 +84,7 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
   }
 
   _loading() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(
         color: Colors.red,
       ),
