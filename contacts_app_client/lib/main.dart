@@ -15,7 +15,10 @@ class Application extends StatelessWidget {
       title: 'Contacts App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: ContactSocketScreen(api: ContactSocketApi()),
+      home: ContactOptionsScreen(
+        rest: ContactRestApi(),
+        socket: ContactSocketApi(),
+      ),
     );
   }
 }
