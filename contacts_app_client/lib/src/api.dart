@@ -84,7 +84,7 @@ class ContactSocketApi {
           Uri.parse('ws://localhost:8081/contacts-ws'),
         );
 
-  final WebSocketChannel _api;
+  WebSocketChannel _api;
 
   Stream<Contacts> get stream => _api.stream.map(
         (data) {
@@ -96,4 +96,11 @@ class ContactSocketApi {
       );
 
   ValueChanged<String> get send => _api.sink.add;
+
+  void close() async {
+    await _api.sink.close();
+    _api = WebSocketChannel.connect(
+      Uri.parse('ws://localhost:8081/contacts-ws'),
+    );
+  }
 }

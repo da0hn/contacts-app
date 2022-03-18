@@ -37,7 +37,6 @@ class _ContactSocketScreenState extends State<ContactSocketScreen> {
           if (_isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-
           return ContactList(
             data: snapshot.data ?? [],
             onAdd: _addContact,
@@ -77,5 +76,12 @@ class _ContactSocketScreenState extends State<ContactSocketScreen> {
       'action': 'ADD',
       'payload': fullName,
     }));
+  }
+
+  @override
+  void dispose() {
+    _socketStream.sink.close();
+    widget.api.close();
+    super.dispose();
   }
 }
