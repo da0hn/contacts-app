@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:contacts_app_client/contacts_api_client.dart';
-import 'package:faker/faker.dart';
+import 'package:contacts_app_client/src/contact_factory.dart';
 import 'package:flutter/material.dart';
 
 class ContactSocketScreen extends StatefulWidget {
@@ -69,12 +69,10 @@ class _ContactSocketScreenState extends State<ContactSocketScreen> {
   }
 
   void _addContact() {
-    final faker = Faker();
-    final person = faker.person;
-    final fullName = '${person.firstName()} ${person.lastName()}';
+    final newContactName = makeNewContact();
     widget.api.send(json.encode({
       'action': 'ADD',
-      'payload': fullName,
+      'payload': newContactName,
     }));
   }
 

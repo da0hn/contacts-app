@@ -1,5 +1,5 @@
 import 'package:contacts_app_client/contacts_api_client.dart';
-import 'package:faker/faker.dart';
+import 'package:contacts_app_client/src/contact_factory.dart';
 import 'package:flutter/material.dart';
 
 class ContactRestScreen extends StatefulWidget {
@@ -92,10 +92,8 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
   }
 
   _addContact() async {
-    final faker = Faker();
-    final person = faker.person;
-    final fullName = '${person.firstName()} ${person.lastName()}';
-    final newContact = await widget.api.add(fullName);
+    var newContactName = makeNewContact();
+    final newContact = await widget.api.add(newContactName);
     setState(() {
       _contacts.add(newContact);
     });
