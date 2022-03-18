@@ -58,7 +58,7 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
 
   FloatingActionButton _buildRefreshButton() {
     return FloatingActionButton(
-      onPressed: () => _fetchContacts(),
+      onPressed: _fetchContacts,
       tooltip: 'Refresh list',
       heroTag: 'refreshButton',
       backgroundColor: Colors.purple,
@@ -68,7 +68,7 @@ class _ContactRestScreenState extends State<ContactRestScreen> {
 
   FloatingActionButton _buildAddContactButton() {
     return FloatingActionButton(
-      onPressed: () => _addContact(),
+      onPressed: _addContact,
       tooltip: 'Add new contact',
       heroTag: 'addContact',
       child: const Icon(Icons.person_add),
